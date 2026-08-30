@@ -7,3 +7,167 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+@layer base {
+    body {
+        background: #f7f5f0;
+    }
+}
+
+@layer components {
+    .miis-container {
+        width: min(100% - 2.5rem, 76rem);
+        margin-inline: auto;
+    }
+
+    .miis-navbar {
+        box-shadow: 0 1px 0 rgb(6 78 59 / 8%), 0 10px 35px rgb(15 23 42 / 4%);
+    }
+
+    .miis-nav-brand-mark {
+        box-shadow: 0 8px 22px rgb(6 78 59 / 14%);
+    }
+
+    .miis-nav-link {
+        position: relative;
+    }
+
+    .miis-nav-link::after {
+        position: absolute;
+        right: .25rem;
+        bottom: -.5rem;
+        left: .25rem;
+        height: 2px;
+        border-radius: 999px;
+        background: #b7791f;
+        content: '';
+        opacity: 0;
+        transform: scaleX(.45);
+        transition: opacity .2s ease, transform .2s ease;
+    }
+
+    .miis-nav-link:hover::after,
+    .miis-nav-link[aria-current='page']::after {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+
+    .miis-hero-surface {
+        background:
+            radial-gradient(circle at 88% 5%, rgb(218 167 84 / 24%), transparent 25rem),
+            radial-gradient(circle at 8% 95%, rgb(110 231 183 / 14%), transparent 24rem),
+            #f7f5f0;
+    }
+
+    .miis-hero-grid {
+        min-height: clamp(39rem, 70vh, 46rem);
+    }
+
+    .miis-home-hero[data-has-hero-image='false'] {
+        background:
+            radial-gradient(circle at 88% 8%, rgb(218 167 84 / 28%), transparent 23rem),
+            radial-gradient(circle at 8% 95%, rgb(110 231 183 / 18%), transparent 26rem),
+            #f7f5f0 !important;
+    }
+
+    .miis-home-hero[data-has-hero-image='false'] > .absolute {
+        background: transparent !important;
+        opacity: 1 !important;
+    }
+
+    .miis-home-hero[data-has-hero-image='false'] h1 {
+        color: #022c22 !important;
+        font-weight: 900;
+        letter-spacing: -.045em;
+    }
+
+    .miis-home-hero[data-has-hero-image='false'] > div > div > p:not(.inline-flex) {
+        color: #475569 !important;
+    }
+
+    .miis-home-hero[data-has-hero-image='false'] .miis-hero-fallback-card > div {
+        min-width: min(22rem, 100%);
+        padding: 2.25rem;
+        border: 7px solid rgb(255 255 255 / 88%);
+        border-radius: 2rem;
+        background:
+            radial-gradient(circle at 82% 12%, rgb(251 191 36 / 35%), transparent 8rem),
+            radial-gradient(circle at 18% 82%, rgb(52 211 153 / 35%), transparent 12rem),
+            linear-gradient(145deg, #013b2c, #08765a);
+        box-shadow: 0 28px 45px rgb(6 78 59 / 20%);
+    }
+
+    .miis-page-hero {
+        background-color: #043b2e;
+        background-image: url('/storage/hero/gedung.jpeg');
+        background-position: center 45%;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .miis-page-hero-overlay {
+        background:
+            linear-gradient(105deg, rgb(0 42 32 / 92%), rgb(4 93 70 / 79%) 58%, rgb(1 54 42 / 84%)) !important;
+    }
+
+    .miis-hero-orbit {
+        animation: miis-drift 12s ease-in-out infinite alternate;
+    }
+
+    .miis-hero-orbit-delayed {
+        animation: miis-drift 16s ease-in-out -5s infinite alternate-reverse;
+    }
+
+    .miis-image-shine::after {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(125deg, transparent 30%, rgb(255 255 255 / 18%), transparent 58%);
+        content: '';
+        pointer-events: none;
+    }
+
+    .miis-value-icon {
+        background: linear-gradient(135deg, #fef3c7, #fff);
+        box-shadow: inset 0 0 0 1px rgb(180 131 45 / 18%);
+    }
+
+    .miis-card-hover {
+        transition: transform .28s ease, box-shadow .28s ease, border-color .28s ease;
+    }
+
+    .miis-card-hover:hover {
+        border-color: rgb(5 150 105 / 32%);
+        box-shadow: 0 22px 38px rgb(6 78 59 / 12%);
+        transform: translateY(-6px);
+    }
+
+    .miis-section-label {
+        letter-spacing: .16em;
+    }
+
+    .miis-dark-band {
+        background:
+            radial-gradient(circle at 90% 50%, rgb(251 191 36 / 16%), transparent 22rem),
+            linear-gradient(115deg, #023b2c, #064e3b 56%, #075b46);
+    }
+
+    .miis-footer-grid-pattern {
+        background-image: radial-gradient(rgb(255 255 255 / 11%) 1px, transparent 1px);
+        background-size: 17px 17px;
+    }
+}
+
+@keyframes miis-drift {
+    from { transform: translate3d(0, 0, 0) rotate(0deg); }
+    to { transform: translate3d(1rem, -1.25rem, 0) rotate(7deg); }
+}
+
+@media (max-width: 640px) {
+    .miis-container {
+        width: min(100% - 2rem, 76rem);
+    }
+
+    .miis-page-hero {
+        background-position: 58% center;
+    }
+}

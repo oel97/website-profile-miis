@@ -17,6 +17,7 @@ class SchoolProfile extends Model
         'ns_madrasah',
         'accreditation',
         'logo_path',
+        'foto_sekolah_path',
         'tagline',
         'short_description',
         'about',

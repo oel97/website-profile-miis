@@ -14,6 +14,7 @@ class PrincipalMessage extends Model
     protected $fillable = [
         'name',
         'position',
+        'title',
         'photo_path',
         'message',
         'signature_path',
