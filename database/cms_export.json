@@ -1,0 +1,378 @@
+{
+    "school_profiles": [
+        {
+            "id": 1,
+            "name": "MI ISLAMIYAH SYAFI'IYAH",
+            "npsn": "MIIS",
+            "ns_madrasah": null,
+            "accreditation": "C",
+            "logo_path": "school-profile\/logo\/IzfPCV0PtgjOtbMwUfHfyFmRXX6sSGUVZaNftfSB.png",
+            "tagline": null,
+            "short_description": "MI Islamiyah Syafi'iyah berdiri tegak di Desa Kotaanyar, Kecamatan Kotaanyar, Kabupaten Probolinggo, Jawa Timur. Sekolah swasta ini menaungi jenjang pendidikan Madrasah Ibtidaiyah (MI) dengan Nomor Pokok Sekolah Nasional (NPSN) 60716386. MIS Islamiyah Syafi Iyah resmi berdiri berdasarkan Surat Keputusan (SK) Nomor Kd.13.13\/4\/MI\/384\/2012 yang terbit pada tanggal 21 Mei 2012.",
+            "about": null,
+            "address": "Desa Kotaanyar Kecamatan Kotaanyar Kabupaten Probolinggo",
+            "village": null,
+            "district": "Kotaanyar",
+            "regency": "Kabupaten Probolinggo",
+            "province": "Jawa Timur",
+            "postal_code": null,
+            "phone": null,
+            "whatsapp": null,
+            "email": null,
+            "website": null,
+            "map_embed_url": null,
+            "latitude": null,
+            "longitude": null,
+            "created_at": "2026-08-14 22:36:17",
+            "updated_at": "2026-08-15 02:09:27",
+            "foto_sekolah_path": "school-profile\/foto\/DQDluMgcQoZgU71LKTMXwVKtJeZPnIiv8Cy04rCs.jpg"
+        }
+    ],
+    "site_settings": [
+        {
+            "id": 1,
+            "group": "general",
+            "key": "site_name",
+            "value": "MI Islamiyah Syafi'iyah",
+            "type": "text",
+            "is_public": 1,
+            "created_at": "2026-08-29 00:01:27",
+            "updated_at": "2026-08-29 00:01:27"
+        },
+        {
+            "id": 2,
+            "group": "general",
+            "key": "site_tagline",
+            "value": "Madrasah Unggul Berkarakter Islami",
+            "type": "text",
+            "is_public": 1,
+            "created_at": "2026-08-29 00:02:29",
+            "updated_at": "2026-08-29 00:02:29"
+        },
+        {
+            "id": 3,
+            "group": "seo",
+            "key": "meta_description",
+            "value": "Website resmi MI Islamiyah Syafi'iyah Kotaanyar. Menyajikan informasi profil madrasah, berita, kegiatan, prestasi, galeri, fasilitas, dan penerimaan peserta didik baru.",
+            "type": "textarea",
+            "is_public": 1,
+            "created_at": "2026-08-29 02:29:41",
+            "updated_at": "2026-08-29 02:29:41"
+        },
+        {
+            "id": 4,
+            "group": "footer",
+            "key": "copyright",
+            "value": "\u00a9 2026 MI Islamiyah Syafi'iyah. All Rights Reserved.",
+            "type": "text",
+            "is_public": 1,
+            "created_at": "2026-08-29 02:35:09",
+            "updated_at": "2026-08-29 02:35:09"
+        },
+        {
+            "id": 5,
+            "group": "general",
+            "key": "favicon",
+            "value": "favicon.ico",
+            "type": "image",
+            "is_public": 1,
+            "created_at": "2026-08-29 02:36:28",
+            "updated_at": "2026-08-30 09:16:24"
+        },
+        {
+            "id": 6,
+            "group": "seo",
+            "key": "meta_title",
+            "value": "MI Islamiyah Syafi'iyah | Madrasah Unggul Berkarakter Islami",
+            "type": "text",
+            "is_public": 1,
+            "created_at": "2026-08-29 02:41:34",
+            "updated_at": "2026-08-29 02:41:34"
+        }
+    ],
+    "homepage_sections": [
+        {
+            "id": 1,
+            "key": "about",
+            "title_override": "Tentang Madrasah",
+            "subtitle_override": "Mengenal lebih dekat MI Islamiyah Syafi'iyah sebagai madrasah unggul berkarakter Islami.",
+            "sort_order": 1,
+            "is_active": 1,
+            "item_limit": 1,
+            "settings": null,
+            "created_at": "2026-08-30 02:19:36",
+            "updated_at": "2026-08-30 02:19:36"
+        },
+        {
+            "id": 2,
+            "key": "programs",
+            "title_override": "Program Unggulan",
+            "subtitle_override": "Program pendidikan unggulan untuk membentuk siswa yang berilmu dan berakhlak.",
+            "sort_order": 2,
+            "is_active": 1,
+            "item_limit": 3,
+            "settings": null,
+            "created_at": "2026-08-30 02:20:45",
+            "updated_at": "2026-08-30 02:20:45"
+        },
+        {
+            "id": 3,
+            "key": "news",
+            "title_override": "Berita & Kegiatan",
+            "subtitle_override": "Informasi terbaru seputar kegiatan MI Islamiyah Syafi'iyah.",
+            "sort_order": 3,
+            "is_active": 1,
+            "item_limit": 3,
+            "settings": null,
+            "created_at": "2026-08-30 02:24:27",
+            "updated_at": "2026-08-30 02:24:27"
+        },
+        {
+            "id": 4,
+            "key": "achievements",
+            "title_override": "Prestasi Madrasah",
+            "subtitle_override": "Berbagai pencapaian dan prestasi siswa madrasah.",
+            "sort_order": 4,
+            "is_active": 1,
+            "item_limit": 3,
+            "settings": null,
+            "created_at": "2026-08-30 02:25:18",
+            "updated_at": "2026-08-30 02:25:18"
+        },
+        {
+            "id": 5,
+            "key": "agenda_ppdb",
+            "title_override": "Agenda & PPDB",
+            "subtitle_override": "Informasi kegiatan madrasah dan penerimaan peserta didik baru.",
+            "sort_order": 5,
+            "is_active": 1,
+            "item_limit": 3,
+            "settings": null,
+            "created_at": "2026-08-30 02:26:24",
+            "updated_at": "2026-08-30 02:26:24"
+        }
+    ],
+    "hero_slides": [
+        {
+            "id": 1,
+            "title": "Madrasah Unggul Berkarakter Islami",
+            "subtitle": "MI Islamiyah Syafi'iyah Kotaanyar hadir memberikan pendidikan berkualitas dengan mengutamakan ilmu, iman, dan akhlak.",
+            "image_path": "hero\/byxMKTMPA3xk0bV8TjXHIMfxaf8BvQAKHX2t8uHm.jpg",
+            "mobile_image_path": null,
+            "button_label": null,
+            "button_url": null,
+            "overlay_opacity": 45,
+            "sort_order": 1,
+            "is_active": 1,
+            "created_at": "2026-08-29 02:52:58",
+            "updated_at": "2026-08-29 02:52:58"
+        }
+    ],
+    "principal_messages": [],
+    "staff": [],
+    "featured_programs": [
+        {
+            "id": 1,
+            "title": "Sholat Dhuha",
+            "slug": "sholat-dhuha",
+            "short_description": "Kegiatan sholat dhuha",
+            "description": "Kegiatan sholat dhuha bersama dilakukan setelah bel berbunyi ,kegiatan ini bermanfaat untuk meningkatkan keamanan pada setiap siswa",
+            "icon": null,
+            "image_path": "programs\/HudRmC2d2eBGyhIpvgE3wY0m5cFFVCfSqdNQUAwY.jpg",
+            "sort_order": 1,
+            "is_active": 1,
+            "created_at": "2026-08-14 13:29:54",
+            "updated_at": "2026-08-14 13:29:54",
+            "deleted_at": null
+        }
+    ],
+    "post_categories": [
+        {
+            "id": 1,
+            "name": "Berita Madrasah",
+            "slug": "berita-madrasah",
+            "description": "Kabar dan informasi terbaru dari madrasah.",
+            "is_active": 1,
+            "created_at": "2026-08-14 13:08:03",
+            "updated_at": "2026-08-14 13:08:03"
+        },
+        {
+            "id": 2,
+            "name": "Kegiatan Sekolah",
+            "slug": "kegiatan-sekolah",
+            "description": "Dokumentasi kegiatan pembelajaran dan sekolah.",
+            "is_active": 1,
+            "created_at": "2026-08-14 13:08:03",
+            "updated_at": "2026-08-14 13:08:03"
+        },
+        {
+            "id": 3,
+            "name": "Pengumuman",
+            "slug": "pengumuman",
+            "description": "Pengumuman resmi untuk siswa, orang tua, dan masyarakat.",
+            "is_active": 1,
+            "created_at": "2026-08-14 13:08:03",
+            "updated_at": "2026-08-14 13:08:03"
+        },
+        {
+            "id": 4,
+            "name": "Prestasi",
+            "slug": "prestasi",
+            "description": "Informasi capaian dan prestasi madrasah.",
+            "is_active": 1,
+            "created_at": "2026-08-14 13:08:03",
+            "updated_at": "2026-08-14 13:08:03"
+        }
+    ],
+    "posts": [
+        {
+            "id": 1,
+            "post_category_id": 2,
+            "author_id": 1,
+            "title": "Istighosah bersama setiap hari Jum'at",
+            "slug": "istighosah-bersama-setiap-hari-jumat",
+            "excerpt": null,
+            "content": "Kegiatan Istighosah bersama yg dilaksanakan setiap hari jum'at pagi setelah bel berbunyi",
+            "featured_image_path": "posts\/axX0MltC3Uva0W6RxkN5gP7wm7LJv4ga8eeVKFoH.png",
+            "status": "published",
+            "published_at": "2026-08-07 07:04:00",
+            "meta_title": null,
+            "meta_description": null,
+            "views_count": 0,
+            "created_at": "2026-08-14 13:26:22",
+            "updated_at": "2026-08-14 13:26:22",
+            "deleted_at": null
+        }
+    ],
+    "achievements": [
+        {
+            "id": 1,
+            "title": "Juara 2 Lomba Gerak jalan Putri Tingkat SD\/MI  se-Kecamatan Kotaanyar",
+            "slug": "juara-2-lomba-gerak-jalan-putri-tingkat-sdmi-se-kecamatan-kotaanyar",
+            "recipient_name": "Siswa",
+            "level": "Tingkat Kecamatan",
+            "organizer": null,
+            "achievement_date": "2026-08-22 00:00:00",
+            "description": "Memenangkan juara 2 untuk lomba Gerak Jalan Putri tingkat sd\/mi yg diselenggarakan oleh kecamatan kotaanyar yg di laksanakan tanggal 22 agustus 2026 tepat di hari sabtu",
+            "image_path": "achievements\/vzIDNQ8XylHI5AfPzIe1K4DXi20xf4MATwXwnX1g.png",
+            "certificate_path": null,
+            "sort_order": 2,
+            "is_published": 1,
+            "created_at": "2026-08-28 01:05:00",
+            "updated_at": "2026-08-28 01:05:00",
+            "deleted_at": null
+        },
+        {
+            "id": 2,
+            "title": "Juara Harapan 1 Gerak Jalan Putra Tingkat SD\/MI se kecamatan Kotaanyar",
+            "slug": "juara-harapan-1-gerak-jalan-putra-tingkat-sdmi-se-kecamatan-kotaanyar",
+            "recipient_name": "Siswa",
+            "level": "Tingkat Kecamatan",
+            "organizer": null,
+            "achievement_date": "2026-08-22 00:00:00",
+            "description": "Juara Harapan 1 Gerak Jalan Putra Tingkat SD\/MI Yang Diselenggarakan Oleh kecamatan Kotaanyar Pada 22 Agustus 2026 Tepatnya Pada Hari Sabtu",
+            "image_path": "achievements\/uZLQ2YDnRo3LaxXEE3vVwqezv0i6yMzoVQT70wLo.png",
+            "certificate_path": null,
+            "sort_order": 1,
+            "is_published": 1,
+            "created_at": "2026-08-28 01:11:00",
+            "updated_at": "2026-08-28 01:11:00",
+            "deleted_at": null
+        }
+    ],
+    "agendas": [],
+    "gallery_albums": [
+        {
+            "id": 1,
+            "title": "Ngaji Tartila  Rutin setiap Pagi",
+            "slug": "ngaji-tartila-rutin-setiap-pagi",
+            "description": "Mengaji Tartila dan Setoran setiap pagi sebelum sholat dhuha kepada ustadz\/ustadzah yg mengajar",
+            "cover_image_path": "gallery\/albums\/EYc30GiJMCBCqVySzBqEC5ARTbl4puYtDzlBS2rw.jpg",
+            "event_date": "2026-08-04 00:00:00",
+            "sort_order": 1,
+            "is_published": 1,
+            "created_at": "2026-08-14 13:00:09",
+            "updated_at": "2026-08-14 13:00:09",
+            "deleted_at": null
+        }
+    ],
+    "gallery_photos": [
+        {
+            "id": 1,
+            "gallery_album_id": 1,
+            "image_path": "gallery\/photos\/nOLapExS56ZhrM8Jmp2Ih8T5ZX7PtX7GkvhpSPrD.jpg",
+            "caption": null,
+            "alt_text": null,
+            "sort_order": 0,
+            "created_at": "2026-08-14 13:00:35",
+            "updated_at": "2026-08-14 13:00:35"
+        }
+    ],
+    "facilities": [
+        {
+            "id": 1,
+            "name": "Ruang Guru",
+            "slug": "ruang-guru",
+            "description": "Ruang Guru yang nyaman dan luas",
+            "image_path": "facilities\/bbJvlCvkicDEWdvra5lfazu195bVlmjgy6kDdgTz.jpg",
+            "quantity": 1,
+            "unit": "Ruang Guru",
+            "sort_order": 1,
+            "is_published": 1,
+            "created_at": "2026-08-14 22:29:29",
+            "updated_at": "2026-08-14 22:30:26",
+            "deleted_at": null
+        }
+    ],
+    "ppdb_periods": [],
+    "ppdb_requirements": [],
+    "ppdb_steps": [],
+    "contacts": [
+        {
+            "id": 1,
+            "label": "Alamat Sekolah",
+            "type": "maps",
+            "value": "dusun gasal kotaanyar",
+            "url": "https:\/\/maps.app.goo.gl\/cGQSKamZLg2B9KsA8",
+            "sort_order": 1,
+            "is_active": 1,
+            "created_at": "2026-08-14 13:36:07",
+            "updated_at": "2026-08-14 13:36:07"
+        },
+        {
+            "id": 2,
+            "label": "whattsapp",
+            "type": "whatsapp",
+            "value": "+62 852-3655-1241",
+            "url": null,
+            "sort_order": 2,
+            "is_active": 1,
+            "created_at": "2026-08-15 02:17:19",
+            "updated_at": "2026-08-15 02:17:19"
+        }
+    ],
+    "social_links": [
+        {
+            "id": 1,
+            "platform": "Youtube",
+            "label": null,
+            "url": "https:\/\/youtube.com\/@miislamiyahsyafiiyah2284?si=cNBmwU0hOBvYl-9n",
+            "icon": "Youtube",
+            "sort_order": 1,
+            "is_active": 1,
+            "created_at": "2026-08-15 02:11:17",
+            "updated_at": "2026-08-15 02:11:17"
+        },
+        {
+            "id": 2,
+            "platform": "Facebook",
+            "label": null,
+            "url": "https:\/\/www.facebook.com\/share\/17jUjpQYHs\/",
+            "icon": "Facebook",
+            "sort_order": 2,
+            "is_active": 1,
+            "created_at": "2026-08-15 02:13:31",
+            "updated_at": "2026-08-15 02:13:31"
+        }
+    ]
+}
