@@ -3,18 +3,19 @@
 @php
     $siteName = $siteSettings->get('site_name')?->value ?? $schoolProfile?->name ?? "MI Islamiyah Syafi'iyah";
     $metaDescription = $staff->bio ?: $staff->position . ' di ' . $siteName . '.';
+    $hasPhoto = $staff->hasPhoto();
 @endphp
 
 @section('title', $staff->name . ' | Guru & Tendik | ' . $siteName)
 @section('meta_description', \Illuminate\Support\Str::limit(strip_tags($metaDescription), 160))
-@if ($staff->photo_path)
+@if ($hasPhoto)
     @section('meta_image', asset('storage/' . $staff->photo_path))
 @endif
 
 @section('content')
     <article class="bg-stone-50 pb-20 sm:pb-24">
         <header class="miis-page-hero relative isolate overflow-hidden bg-emerald-950 py-20 sm:py-24">
-            @if ($staff->photo_path)
+            @if ($hasPhoto)
                 <img src="{{ asset('storage/' . $staff->photo_path) }}" alt="Foto {{ $staff->name }}" class="absolute inset-0 -z-20 h-full w-full object-cover" fetchpriority="high">
                 <div class="absolute inset-0 -z-10 bg-emerald-950/85"></div>
             @else
@@ -32,7 +33,7 @@
         <div class="mx-auto max-w-4xl px-5 pt-12 sm:px-6 sm:pt-16 lg:px-8">
             <div class="grid gap-10 md:grid-cols-[minmax(12rem,0.75fr)_minmax(0,1.25fr)]">
                 <div>
-                    @if ($staff->photo_path)
+                    @if ($hasPhoto)
                         <img src="{{ asset('storage/' . $staff->photo_path) }}" alt="Foto {{ $staff->name }}" class="aspect-[4/5] w-full rounded-3xl object-cover shadow-xl shadow-emerald-950/10" loading="lazy">
                     @else
                         <div class="flex aspect-[4/5] items-end rounded-3xl bg-[linear-gradient(145deg,_#064e3b,_#059669_62%,_#fbbf24)] p-7 shadow-xl shadow-emerald-950/10">

@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\SchoolProfile;
 use App\Models\Staff;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
 class FrontendStaffTest extends TestCase
@@ -94,5 +95,52 @@ class FrontendStaffTest extends TestCase
 
         $this->get(route('staff.show', $inactiveStaff))
             ->assertNotFound();
+    }
+
+    public function test_public_staff_pages_use_a_placeholder_when_the_photo_file_is_missing(): void
+    {
+        Storage::fake('public');
+
+        $staff = Staff::create([
+            'name' => 'Foto Hilang',
+            'position' => 'Guru Kelas',
+            'employment_type' => 'Guru Tetap',
+            'photo_path' => 'staff/missing.jpg',
+            'is_active' => true,
+        ]);
+
+        $missingPhotoUrl = asset('storage/staff/missing.jpg');
+
+        $this->get(route('staff'))
+            ->assertOk()
+            ->assertDontSee($missingPhotoUrl);
+
+        $this->get(route('staff.show', $staff))
+            ->assertOk()
+            ->assertDontSee($missingPhotoUrl);
+    }
+
+    public function test_public_staff_pages_display_a_photo_that_exists_on_the_public_disk(): void
+    {
+        Storage::fake('public');
+        Storage::disk('public')->put('staff/available.jpg', 'photo-content');
+
+        $staff = Staff::create([
+            'name' => 'Foto Tersedia',
+            'position' => 'Guru Kelas',
+            'employment_type' => 'Guru Tetap',
+            'photo_path' => 'staff/available.jpg',
+            'is_active' => true,
+        ]);
+
+        $photoUrl = asset('storage/staff/available.jpg');
+
+        $this->get(route('staff'))
+            ->assertOk()
+            ->assertSee($photoUrl);
+
+        $this->get(route('staff.show', $staff))
+            ->assertOk()
+            ->assertSee($photoUrl);
     }
 }

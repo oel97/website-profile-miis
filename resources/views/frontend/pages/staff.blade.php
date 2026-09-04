@@ -48,10 +48,11 @@
 
                     <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         @forelse ($group['members'] as $staff)
+                            @php($hasPhoto = $staff->hasPhoto())
                             <article class="group overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-slate-200 transition duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-emerald-950/10">
                                 <a href="{{ route('staff.show', $staff) }}" class="block focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-500/30" aria-label="Lihat profil {{ $staff->name }}">
                                     <div class="relative bg-emerald-100">
-                                        @if ($staff->photo_path)
+                                        @if ($hasPhoto)
                                             <img src="{{ asset('storage/' . $staff->photo_path) }}" alt="Foto {{ $staff->name }}" class="aspect-[4/5] w-full object-cover" loading="lazy">
                                         @else
                                             <div @class([

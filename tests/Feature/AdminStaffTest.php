@@ -32,6 +32,11 @@ class AdminStaffTest extends TestCase
         $this->get(route('admin.staff.index'))
             ->assertOk()
             ->assertSee('Guru & Tenaga Kependidikan', false);
+
+        $this->get(route('admin.staff.create'))
+            ->assertOk()
+            ->assertSee('enctype="multipart/form-data"', false)
+            ->assertSee('name="photo"', false);
     }
 
     public function test_admin_can_create_a_staff_member_with_a_photo(): void
@@ -60,6 +65,10 @@ class AdminStaffTest extends TestCase
 
         $staff = Staff::firstOrFail();
         Storage::disk('public')->assertExists($staff->photo_path);
+
+        $this->get(route('admin.staff.index'))
+            ->assertOk()
+            ->assertSee(asset('storage/'.$staff->photo_path));
     }
 
     public function test_staff_validation_requires_the_mandatory_fields(): void
@@ -72,6 +81,29 @@ class AdminStaffTest extends TestCase
             ])
             ->assertRedirect(route('admin.staff.create'))
             ->assertSessionHasErrors(['name', 'position', 'employment_type']);
+    }
+
+    public function test_staff_photo_must_be_a_supported_image_under_two_megabytes(): void
+    {
+        $this->actingAsAdmin();
+        Storage::fake('public');
+
+        $validData = [
+            'name' => 'Siti Aminah',
+            'position' => 'Guru Kelas',
+            'employment_type' => 'Guru Tetap',
+            'is_active' => true,
+        ];
+
+        $this->post(route('admin.staff.store'), $validData + [
+            'photo' => UploadedFile::fake()->create('photo.gif', 100, 'image/gif'),
+        ])->assertSessionHasErrors('photo');
+
+        $this->post(route('admin.staff.store'), $validData + [
+            'photo' => UploadedFile::fake()->create('photo.jpg', 2049, 'image/jpeg'),
+        ])->assertSessionHasErrors('photo');
+
+        $this->assertDatabaseCount('staff', 0);
     }
 
     public function test_admin_can_update_a_staff_member_and_replace_the_photo(): void
@@ -109,6 +141,10 @@ class AdminStaffTest extends TestCase
         $this->assertNotSame($oldPhotoPath, $staff->photo_path);
         Storage::disk('public')->assertMissing($oldPhotoPath);
         Storage::disk('public')->assertExists($staff->photo_path);
+
+        $this->get(route('admin.staff.index'))
+            ->assertOk()
+            ->assertSee(asset('storage/'.$staff->photo_path));
     }
 
     public function test_admin_can_soft_delete_a_staff_member(): void
@@ -130,6 +166,24 @@ class AdminStaffTest extends TestCase
             ->assertRedirect(route('admin.staff.index'));
 
         $this->assertSoftDeleted('staff', ['id' => $staff->id]);
-        Storage::disk('public')->assertExists($photoPath);
+        Storage::disk('public')->assertMissing($photoPath);
+    }
+
+    public function test_admin_index_uses_a_placeholder_when_the_photo_file_is_missing(): void
+    {
+        $this->actingAsAdmin();
+        Storage::fake('public');
+
+        Staff::create([
+            'name' => 'Foto Hilang',
+            'position' => 'Guru Kelas',
+            'employment_type' => 'Guru Tetap',
+            'photo_path' => 'staff/missing.jpg',
+            'is_active' => true,
+        ]);
+
+        $this->get(route('admin.staff.index'))
+            ->assertOk()
+            ->assertDontSee(asset('storage/staff/missing.jpg'));
     }
 }

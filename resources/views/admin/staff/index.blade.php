@@ -39,7 +39,7 @@
                         @forelse ($staffMembers as $staff)
                             <tr class="border-t border-slate-200">
                                 <td class="px-4 py-3">
-                                    @if ($staff->photo_path)
+                                    @if ($staff->hasPhoto())
                                         <img src="{{ asset('storage/' . $staff->photo_path) }}" alt="Foto {{ $staff->name }}" class="h-12 w-12 rounded-xl object-cover ring-1 ring-slate-200">
                                     @else
                                         <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-100 text-sm font-bold text-emerald-700">

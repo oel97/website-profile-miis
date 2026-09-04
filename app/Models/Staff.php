@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 
 class Staff extends Model
 {
@@ -38,5 +39,14 @@ class Staff extends Model
             'sort_order' => 'integer',
             'is_active' => 'boolean',
         ];
+    }
+
+    /**
+     * Determine whether the configured photo is present on the public disk.
+     */
+    public function hasPhoto(): bool
+    {
+        return filled($this->photo_path)
+            && Storage::disk('public')->exists($this->photo_path);
     }
 }

@@ -1,2 +1,6 @@
 *
+!private/
+!public/
+!public/staff/
+!public/staff/*
 !.gitignore

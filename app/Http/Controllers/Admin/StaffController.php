@@ -8,6 +8,8 @@ use App\Models\Staff;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use RuntimeException;
+use Throwable;
 
 class StaffController extends Controller
 {
@@ -38,14 +40,29 @@ class StaffController extends Controller
     public function store(StaffRequest $request): RedirectResponse
     {
         $data = $request->validated();
+        $photoPath = null;
 
-        if ($request->hasFile('photo')) {
-            $data['photo_path'] = $request->file('photo')->store('staff', 'public');
+        try {
+            if ($request->hasFile('photo')) {
+                $photoPath = $request->file('photo')->store('staff', 'public');
+
+                if (! $photoPath) {
+                    throw new RuntimeException('Foto staff gagal disimpan.');
+                }
+
+                $data['photo_path'] = $photoPath;
+            }
+
+            unset($data['photo']);
+
+            Staff::create($data);
+        } catch (Throwable $exception) {
+            if ($photoPath) {
+                Storage::disk('public')->delete($photoPath);
+            }
+
+            throw $exception;
         }
-
-        unset($data['photo']);
-
-        Staff::create($data);
 
         return redirect()
             ->route('admin.staff.index')
@@ -66,18 +83,34 @@ class StaffController extends Controller
     public function update(StaffRequest $request, Staff $staff): RedirectResponse
     {
         $data = $request->validated();
+        $oldPhotoPath = $staff->photo_path;
+        $newPhotoPath = null;
 
-        if ($request->hasFile('photo')) {
-            if ($staff->photo_path) {
-                Storage::disk('public')->delete($staff->photo_path);
+        try {
+            if ($request->hasFile('photo')) {
+                $newPhotoPath = $request->file('photo')->store('staff', 'public');
+
+                if (! $newPhotoPath) {
+                    throw new RuntimeException('Foto staff gagal disimpan.');
+                }
+
+                $data['photo_path'] = $newPhotoPath;
             }
 
-            $data['photo_path'] = $request->file('photo')->store('staff', 'public');
+            unset($data['photo']);
+
+            $staff->update($data);
+        } catch (Throwable $exception) {
+            if ($newPhotoPath) {
+                Storage::disk('public')->delete($newPhotoPath);
+            }
+
+            throw $exception;
         }
 
-        unset($data['photo']);
-
-        $staff->update($data);
+        if ($newPhotoPath && $oldPhotoPath && $oldPhotoPath !== $newPhotoPath) {
+            Storage::disk('public')->delete($oldPhotoPath);
+        }
 
         return redirect()
             ->route('admin.staff.index')
@@ -89,7 +122,13 @@ class StaffController extends Controller
      */
     public function destroy(Staff $staff): RedirectResponse
     {
+        $photoPath = $staff->photo_path;
+
         $staff->delete();
+
+        if ($photoPath) {
+            Storage::disk('public')->delete($photoPath);
+        }
 
         return redirect()
             ->route('admin.staff.index')

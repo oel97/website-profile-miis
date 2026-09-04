@@ -3,6 +3,8 @@
 @section('title', 'Edit Guru & Tendik')
 
 @section('content')
+    @php($hasPhoto = $staff->hasPhoto())
+
     <div class="mx-auto max-w-4xl space-y-6">
         <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <p class="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">Master Sekolah</p>
@@ -70,11 +72,13 @@
 
                 <div class="md:col-span-2">
                     <label for="photo" class="mb-2 block text-sm font-medium text-slate-700">Foto</label>
-                    <div id="photo-preview-wrapper" @class([
-                        'mb-4 overflow-hidden rounded-xl border border-slate-200 bg-slate-50 p-3',
-                        'hidden' => ! $staff->photo_path,
-                    ])>
-                        <img id="photo-preview" src="{{ $staff->photo_path ? asset('storage/' . $staff->photo_path) : '' }}" alt="Pratinjau foto {{ $staff->name }}" class="h-36 w-28 rounded-lg object-cover">
+                    <div id="photo-preview-wrapper" class="mb-4 overflow-hidden rounded-xl border border-slate-200 bg-slate-50 p-3">
+                        <img id="photo-preview" src="{{ $hasPhoto ? asset('storage/' . $staff->photo_path) : '' }}" alt="Pratinjau foto {{ $staff->name }}" @class(['h-36 w-28 rounded-lg object-cover', 'hidden' => ! $hasPhoto])>
+                        @unless ($hasPhoto)
+                            <div id="photo-placeholder" class="flex h-36 w-28 items-center justify-center rounded-lg bg-emerald-100 text-3xl font-bold text-emerald-700">
+                                {{ strtoupper(substr($staff->name, 0, 1)) }}
+                            </div>
+                        @endunless
                     </div>
                     <input id="photo" type="file" name="photo" accept="image/jpeg,image/png,image/webp" class="w-full rounded-xl border border-dashed border-slate-300 bg-slate-50 px-3 py-3 text-sm text-slate-600 file:mr-4 file:rounded-lg file:border-0 file:bg-emerald-600 file:px-3 file:py-2 file:text-sm file:font-medium file:text-white">
                     <p class="mt-2 text-xs text-slate-500">Unggah foto baru untuk mengganti foto saat ini. Maksimal 2 MB.</p>
@@ -98,6 +102,8 @@
             }
 
             document.getElementById('photo-preview').src = URL.createObjectURL(file);
+            document.getElementById('photo-preview').classList.remove('hidden');
+            document.getElementById('photo-placeholder')?.classList.add('hidden');
             document.getElementById('photo-preview-wrapper').classList.remove('hidden');
         });
     </script>
