@@ -1,18 +1,35 @@
-@php($mobile = $mobile ?? false)
+@php
+    $mobile = isset($mobile) ? $mobile : false;
+    $schoolProfile = \App\Models\SchoolProfile::first();
+@endphp
 
 <aside @class([
-    'hidden w-72 flex-shrink-0 bg-slate-900 text-slate-100 md:flex md:flex-col' => ! $mobile,
-    'mt-4 flex flex-col overflow-hidden rounded-2xl bg-slate-900 text-slate-100 shadow-xl' => $mobile,
+    'hidden w-72 flex-shrink-0 bg-slate-900 text-slate-100 md:flex md:flex-col',
+    'mt-4 flex flex-col overflow-hidden rounded-2xl bg-slate-100 shadow-lg' => $mobile,
 ])>
-    <div class="flex items-center gap-3 border-b border-slate-800 px-6 py-5">
-        <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/20 text-lg font-bold text-emerald-300">
+    <div class="flex items-center gap-3 px-5 py-4">
+    @if($schoolProfile?->logo_path)
+        <img 
+            src="{{ asset('storage/' . $schoolProfile->logo_path) }}"
+            class="h-10 w-10 rounded-lg object-contain bg-white"
+            alt="Logo Sekolah"
+        >
+    @else
+        <div class="h-10 w-10 rounded-lg bg-emerald-600 text-white flex items-center justify-center font-bold">
             MI
         </div>
-        <div>
-            <p class="text-xs uppercase tracking-[0.2em] text-slate-400">Admin</p>
-            <h2 class="text-base font-semibold text-white">MIIS</h2>
-        </div>
+    @endif
+
+    <div class="leading-tight">
+        <p class="text-[11px] tracking-[3px] text-slate-400 uppercase">
+            Admin
+        </p>
+
+        <p class="text-sm font-bold text-white">
+            MIIS
+        </p>
     </div>
+</div>
 
     <nav class="flex-1 space-y-6 px-4 py-6">
         <div>

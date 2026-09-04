@@ -1,3 +1,6 @@
+@php
+    $schoolProfile = \App\Models\SchoolProfile::first();
+@endphp
 <header class="border-b border-slate-200 bg-white px-4 py-3 shadow-sm sm:px-6 sm:py-4">
     <div class="flex items-center justify-between gap-3 sm:gap-4">
         <div class="min-w-0">
@@ -20,9 +23,17 @@
             </div>
 
             <a href="{{ route('admin.account.edit') }}" class="flex items-center gap-3 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 transition hover:border-emerald-300 hover:bg-emerald-50" aria-label="Kelola akun saya">
-                <div class="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-100 text-sm font-bold text-emerald-700">
-                    {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
-                </div>
+                @if($schoolProfile?->logo_path)
+                    <img
+                        src="{{ asset('storage/' . $schoolProfile->logo_path) }}"
+                        class="h-9 w-9 rounded-full object-contain bg-white border border-emerald-100"
+                        alt="Logo Sekolah"
+                    >
+                @else
+                    <div class="flex h-9 w-9 items-center justify-center rounded-full bg-emerald-100 text-sm font-bold text-emerald-700">
+                        {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
+                    </div>
+                @endif
                 <div class="hidden text-left sm:block">
                     <p class="text-sm font-semibold text-slate-900">{{ auth()->user()->name ?? 'Administrator' }}</p>
                     <p class="text-xs text-slate-500">{{ auth()->user()->email ?? 'admin@profilemiis.test' }}</p>
