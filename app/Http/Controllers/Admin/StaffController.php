@@ -31,7 +31,7 @@ class StaffController extends Controller
      */
     public function create(): View
     {
-        return view('admin.staff.create');
+        return view('admin.staff.create', $this->formOptions());
     }
 
     /**
@@ -74,7 +74,10 @@ class StaffController extends Controller
      */
     public function edit(Staff $staff): View
     {
-        return view('admin.staff.edit', compact('staff'));
+        return view('admin.staff.edit', [
+            'staff' => $staff,
+            ...$this->formOptions($staff),
+        ]);
     }
 
     /**
@@ -133,5 +136,34 @@ class StaffController extends Controller
         return redirect()
             ->route('admin.staff.index')
             ->with('success', 'Data guru atau tenaga kependidikan berhasil dihapus.');
+    }
+
+    /**
+     * Get options for the create and edit forms without discarding legacy values.
+     *
+     * @return array<string, array<mixed>>
+     */
+    private function formOptions(?Staff $staff = null): array
+    {
+        $categoryOptions = Staff::CATEGORY_OPTIONS;
+        $educationOptions = Staff::EDUCATION_OPTIONS;
+
+        if ($staff && filled($staff->employment_type)) {
+            $categoryOptions[$staff->type] ??= [];
+
+            if (! in_array($staff->employment_type, $categoryOptions[$staff->type], true)) {
+                $categoryOptions[$staff->type][] = $staff->employment_type;
+            }
+        }
+
+        if ($staff && filled($staff->education) && ! in_array($staff->education, $educationOptions, true)) {
+            $educationOptions[] = $staff->education;
+        }
+
+        return [
+            'typeOptions' => Staff::TYPE_OPTIONS,
+            'categoryOptions' => $categoryOptions,
+            'educationOptions' => $educationOptions,
+        ];
     }
 }

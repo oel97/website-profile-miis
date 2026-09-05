@@ -8,7 +8,6 @@ use App\Models\SchoolProfile;
 use App\Models\SiteSetting;
 use App\Models\SocialLink;
 use App\Models\Staff;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class StaffController extends Controller
@@ -23,19 +22,19 @@ class StaffController extends Controller
             ->get()
             ->keyBy('key');
 
-        $staffMembers = Staff::query()
+        $teachers = Staff::query()
+            ->where('type', Staff::TYPE_GURU)
             ->where('is_active', true)
             ->orderBy('sort_order')
             ->orderBy('name')
             ->get();
 
-        $teachers = $staffMembers
-            ->filter(fn (Staff $staff): bool => $this->isTeacher($staff))
-            ->values();
-
-        $educationStaff = $staffMembers
-            ->reject(fn (Staff $staff): bool => $this->isTeacher($staff))
-            ->values();
+        $educationStaff = Staff::query()
+            ->where('type', Staff::TYPE_EDUCATION_STAFF)
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->get();
 
         $contacts = Contact::query()
             ->where('is_active', true)
@@ -96,13 +95,5 @@ class StaffController extends Controller
             'contacts',
             'socialLinks',
         ));
-    }
-
-    private function isTeacher(Staff $staff): bool
-    {
-        return Str::contains(
-            Str::lower($staff->employment_type . ' ' . $staff->position),
-            'guru',
-        );
     }
 }

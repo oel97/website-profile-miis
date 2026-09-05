@@ -36,7 +36,11 @@ class AdminStaffTest extends TestCase
         $this->get(route('admin.staff.create'))
             ->assertOk()
             ->assertSee('enctype="multipart/form-data"', false)
-            ->assertSee('name="photo"', false);
+            ->assertSee('name="photo"', false)
+            ->assertSee('name="type"', false)
+            ->assertSee('value="tenaga_kependidikan"', false)
+            ->assertSee('name="employment_type"', false)
+            ->assertSee('name="education"', false);
     }
 
     public function test_admin_can_create_a_staff_member_with_a_photo(): void
@@ -46,9 +50,10 @@ class AdminStaffTest extends TestCase
 
         $response = $this->post(route('admin.staff.store'), [
             'name' => 'Siti Aminah, S.Pd.',
+            'type' => Staff::TYPE_GURU,
             'position' => 'Guru Kelas',
-            'employment_type' => 'Guru Tetap',
-            'education' => 'S.Pd.',
+            'employment_type' => 'Guru Kelas',
+            'education' => 'S.Pd',
             'bio' => 'Mengajar dengan pendekatan yang ramah anak.',
             'sort_order' => 1,
             'is_active' => true,
@@ -58,8 +63,9 @@ class AdminStaffTest extends TestCase
         $response->assertRedirect(route('admin.staff.index'));
         $this->assertDatabaseHas('staff', [
             'name' => 'Siti Aminah, S.Pd.',
+            'type' => Staff::TYPE_GURU,
             'position' => 'Guru Kelas',
-            'employment_type' => 'Guru Tetap',
+            'employment_type' => 'Guru Kelas',
             'is_active' => true,
         ]);
 
@@ -71,6 +77,86 @@ class AdminStaffTest extends TestCase
             ->assertSee(asset('storage/'.$staff->photo_path));
     }
 
+    public function test_admin_can_create_an_education_staff_member(): void
+    {
+        $this->actingAsAdmin();
+
+        $this->post(route('admin.staff.store'), [
+            'name' => 'Budi Santoso',
+            'type' => Staff::TYPE_EDUCATION_STAFF,
+            'position' => 'Operator Sekolah',
+            'employment_type' => 'Operator Madrasah',
+            'education' => 'S1',
+            'bio' => 'Mengelola sistem informasi madrasah.',
+            'sort_order' => 2,
+            'is_active' => true,
+        ])->assertRedirect(route('admin.staff.index'));
+
+        $this->assertDatabaseHas('staff', [
+            'name' => 'Budi Santoso',
+            'type' => Staff::TYPE_EDUCATION_STAFF,
+            'employment_type' => 'Operator Madrasah',
+        ]);
+
+        $this->get(route('admin.staff.index'))
+            ->assertOk()
+            ->assertSee('Tenaga Kependidikan');
+    }
+
+    public function test_staff_category_must_match_the_selected_type(): void
+    {
+        $this->actingAsAdmin();
+
+        $this->post(route('admin.staff.store'), [
+            'name' => 'Kategori Tidak Sesuai',
+            'type' => Staff::TYPE_EDUCATION_STAFF,
+            'position' => 'Guru Kelas',
+            'employment_type' => 'Guru Kelas',
+            'is_active' => true,
+        ])->assertSessionHasErrors('employment_type');
+
+        $this->post(route('admin.staff.store'), [
+            'name' => 'Pendidikan Tidak Sesuai',
+            'type' => Staff::TYPE_GURU,
+            'position' => 'Guru Kelas',
+            'employment_type' => 'Guru Kelas',
+            'education' => 'Pendidikan Bebas',
+            'is_active' => true,
+        ])->assertSessionHasErrors('education');
+
+        $this->assertDatabaseMissing('staff', ['name' => 'Kategori Tidak Sesuai']);
+        $this->assertDatabaseMissing('staff', ['name' => 'Pendidikan Tidak Sesuai']);
+    }
+
+    public function test_legacy_staff_defaults_to_guru_and_keeps_existing_option_values(): void
+    {
+        $this->actingAsAdmin();
+
+        $staff = Staff::create([
+            'name' => 'Data Staff Lama',
+            'position' => 'Guru Senior',
+            'employment_type' => 'Guru Tetap',
+            'education' => 'S.Kom.',
+            'is_active' => true,
+        ])->refresh();
+
+        $this->assertSame(Staff::TYPE_GURU, $staff->type);
+
+        $this->get(route('admin.staff.edit', $staff))
+            ->assertOk()
+            ->assertSee('Guru Tetap')
+            ->assertSee('S.Kom.');
+
+        $this->put(route('admin.staff.update', $staff), [
+            'name' => 'Data Staff Lama',
+            'type' => Staff::TYPE_GURU,
+            'position' => 'Guru Senior',
+            'employment_type' => 'Guru Tetap',
+            'education' => 'S.Kom.',
+            'is_active' => true,
+        ])->assertRedirect(route('admin.staff.index'));
+    }
+
     public function test_staff_validation_requires_the_mandatory_fields(): void
     {
         $this->actingAsAdmin();
@@ -80,7 +166,7 @@ class AdminStaffTest extends TestCase
                 'is_active' => true,
             ])
             ->assertRedirect(route('admin.staff.create'))
-            ->assertSessionHasErrors(['name', 'position', 'employment_type']);
+            ->assertSessionHasErrors(['name', 'type', 'position', 'employment_type']);
     }
 
     public function test_staff_photo_must_be_a_supported_image_under_two_megabytes(): void
@@ -90,8 +176,9 @@ class AdminStaffTest extends TestCase
 
         $validData = [
             'name' => 'Siti Aminah',
+            'type' => Staff::TYPE_GURU,
             'position' => 'Guru Kelas',
-            'employment_type' => 'Guru Tetap',
+            'employment_type' => 'Guru Kelas',
             'is_active' => true,
         ];
 
@@ -114,9 +201,10 @@ class AdminStaffTest extends TestCase
         $oldPhotoPath = UploadedFile::fake()->image('old-photo.jpg')->store('staff', 'public');
         $staff = Staff::create([
             'name' => 'Ahmad Fauzi',
+            'type' => Staff::TYPE_GURU,
             'position' => 'Guru Kelas',
-            'employment_type' => 'Guru Tetap',
-            'education' => 'S.Pd.',
+            'employment_type' => 'Guru Kelas',
+            'education' => 'S.Pd',
             'photo_path' => $oldPhotoPath,
             'sort_order' => 2,
             'is_active' => true,
@@ -124,9 +212,10 @@ class AdminStaffTest extends TestCase
 
         $response = $this->put(route('admin.staff.update', $staff), [
             'name' => 'Ahmad Fauzi, S.Pd.',
+            'type' => Staff::TYPE_GURU,
             'position' => 'Wali Kelas',
-            'employment_type' => 'Guru Tetap',
-            'education' => 'S.Pd.',
+            'employment_type' => 'Guru Kelas',
+            'education' => 'S.Pd',
             'bio' => 'Wali kelas tahun pelajaran berjalan.',
             'sort_order' => 3,
             'is_active' => false,
@@ -155,8 +244,9 @@ class AdminStaffTest extends TestCase
         $photoPath = UploadedFile::fake()->image('staff-photo.jpg')->store('staff', 'public');
         $staff = Staff::create([
             'name' => 'Nur Hasanah',
+            'type' => Staff::TYPE_EDUCATION_STAFF,
             'position' => 'Tenaga Administrasi',
-            'employment_type' => 'Tenaga Kependidikan',
+            'employment_type' => 'Tenaga Administrasi',
             'photo_path' => $photoPath,
             'sort_order' => 4,
             'is_active' => true,

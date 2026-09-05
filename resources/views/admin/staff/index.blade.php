@@ -28,6 +28,7 @@
                         <tr>
                             <th class="px-4 py-3 font-semibold">Foto</th>
                             <th class="px-4 py-3 font-semibold">Nama</th>
+                            <th class="px-4 py-3 font-semibold">Jenis</th>
                             <th class="px-4 py-3 font-semibold">Jabatan</th>
                             <th class="px-4 py-3 font-semibold">Kategori</th>
                             <th class="px-4 py-3 font-semibold">Pendidikan</th>
@@ -48,6 +49,13 @@
                                     @endif
                                 </td>
                                 <td class="px-4 py-3 font-medium text-slate-900">{{ $staff->name }}</td>
+                                <td class="px-4 py-3">
+                                    <span @class([
+                                        'rounded-full px-2.5 py-1 text-xs font-semibold',
+                                        'bg-emerald-100 text-emerald-700' => $staff->type === \App\Models\Staff::TYPE_GURU,
+                                        'bg-amber-100 text-amber-800' => $staff->type === \App\Models\Staff::TYPE_EDUCATION_STAFF,
+                                    ])>{{ $staff->typeLabel() }}</span>
+                                </td>
                                 <td class="px-4 py-3">{{ $staff->position }}</td>
                                 <td class="px-4 py-3">{{ $staff->employment_type }}</td>
                                 <td class="px-4 py-3">{{ $staff->education ?? '-' }}</td>
@@ -71,7 +79,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="px-4 py-12 text-center text-slate-500">
+                                <td colspan="8" class="px-4 py-12 text-center text-slate-500">
                                     Belum ada data guru atau tenaga kependidikan.
                                 </td>
                             </tr>

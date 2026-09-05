@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Models\Staff;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StaffRequest extends FormRequest
 {
@@ -17,15 +20,29 @@ class StaffRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
+        $staff = $this->route('staff');
+        $type = (string) $this->input('type');
+        $categories = Staff::CATEGORY_OPTIONS[$type] ?? [];
+        $educationOptions = Staff::EDUCATION_OPTIONS;
+
+        if ($staff instanceof Staff && $staff->type === $type && filled($staff->employment_type)) {
+            $categories[] = $staff->employment_type;
+        }
+
+        if ($staff instanceof Staff && filled($staff->education)) {
+            $educationOptions[] = $staff->education;
+        }
+
         return [
             'name' => ['required', 'string', 'max:255'],
+            'type' => ['required', Rule::in(array_keys(Staff::TYPE_OPTIONS))],
             'position' => ['required', 'string', 'max:255'],
-            'employment_type' => ['required', 'string', 'max:255'],
-            'education' => ['nullable', 'string', 'max:255'],
+            'employment_type' => ['required', 'string', 'max:255', Rule::in(array_unique($categories))],
+            'education' => ['nullable', 'string', 'max:255', Rule::in(array_unique($educationOptions))],
             'photo' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'bio' => ['nullable', 'string'],
             'sort_order' => ['nullable', 'integer', 'min:0'],
@@ -42,6 +59,7 @@ class StaffRequest extends FormRequest
     {
         return [
             'name' => 'nama',
+            'type' => 'jenis staff',
             'position' => 'jabatan',
             'employment_type' => 'kategori',
             'education' => 'pendidikan terakhir',

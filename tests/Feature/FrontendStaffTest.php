@@ -30,26 +30,29 @@ class FrontendStaffTest extends TestCase
 
         Staff::create([
             'name' => 'Siti Aminah, S.Pd.',
+            'type' => Staff::TYPE_GURU,
             'position' => 'Guru Kelas',
-            'employment_type' => 'Guru Tetap',
-            'education' => 'S.Pd.',
+            'employment_type' => 'Guru Kelas',
+            'education' => 'S.Pd',
             'sort_order' => 1,
             'is_active' => true,
         ]);
 
         Staff::create([
             'name' => 'Budi Santoso',
+            'type' => Staff::TYPE_EDUCATION_STAFF,
             'position' => 'Operator Madrasah',
-            'employment_type' => 'Tenaga Kependidikan',
-            'education' => 'S.Kom.',
+            'employment_type' => 'Operator Madrasah',
+            'education' => 'S1',
             'sort_order' => 2,
             'is_active' => true,
         ]);
 
         Staff::create([
             'name' => 'Data Tidak Aktif',
+            'type' => Staff::TYPE_GURU,
             'position' => 'Guru Mata Pelajaran',
-            'employment_type' => 'Guru Honorer',
+            'employment_type' => 'Guru Mata Pelajaran',
             'is_active' => false,
         ]);
 
@@ -57,11 +60,11 @@ class FrontendStaffTest extends TestCase
             ->assertOk()
             ->assertSee('Siti Aminah, S.Pd.')
             ->assertSee('Guru Kelas')
-            ->assertSee('Guru Tetap')
             ->assertSee('Budi Santoso')
             ->assertSee('Operator Madrasah')
-            ->assertSee('Tenaga Kependidikan')
-            ->assertDontSee('Data Tidak Aktif');
+            ->assertDontSee('Data Tidak Aktif')
+            ->assertViewHas('teachers', fn ($teachers): bool => $teachers->pluck('name')->all() === ['Siti Aminah, S.Pd.'])
+            ->assertViewHas('educationStaff', fn ($staff): bool => $staff->pluck('name')->all() === ['Budi Santoso']);
     }
 
     public function test_active_staff_member_can_be_opened_on_a_public_profile_page(): void

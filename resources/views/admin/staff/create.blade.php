@@ -35,17 +35,7 @@
                     @error('position') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
                 </div>
 
-                <div>
-                    <label for="employment_type" class="mb-2 block text-sm font-medium text-slate-700">Kategori</label>
-                    <input id="employment_type" type="text" name="employment_type" value="{{ old('employment_type') }}" required class="w-full rounded-xl border border-slate-200 px-3 py-2.5 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100" placeholder="Contoh: Guru Tetap">
-                    @error('employment_type') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
-                </div>
-
-                <div>
-                    <label for="education" class="mb-2 block text-sm font-medium text-slate-700">Pendidikan Terakhir</label>
-                    <input id="education" type="text" name="education" value="{{ old('education') }}" class="w-full rounded-xl border border-slate-200 px-3 py-2.5 outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100" placeholder="Contoh: S.Pd.">
-                    @error('education') <p class="mt-1 text-xs text-red-600">{{ $message }}</p> @enderror
-                </div>
+                @include('admin.staff._classification-fields')
 
                 <div>
                     <label for="sort_order" class="mb-2 block text-sm font-medium text-slate-700">Urutan Tampil</label>
